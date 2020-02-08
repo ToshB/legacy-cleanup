@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 name: 'Legacy Cleanup'
 description: 'Action for detecting legacy patterns'
 author: 'Torstein Bjørnstad'
+=======
+name: 'Legacy'
+description: 'Create issue for legacy patterns'
+author: 'Torstein Bjørnstad'
+inputs:
+  repo-token:
+    description: 'The GITHUB_TOKEN secret'
+>>>>>>> master
 runs:
   using: 'node12'
   main: 'dist/index.js'
