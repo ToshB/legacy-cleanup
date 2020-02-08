@@ -16,7 +16,12 @@ async function run(): Promise<void> {
 
     if(!Array.isArray(res.data)){
       const content = res.data.content;
-      core.info(content || '');
+      if(content){
+        const file = Buffer.from(content, 'base64').toString();
+        const json = JSON.parse(file);
+        core.info(json);
+      }
+
     }
 
   } catch (error) {
