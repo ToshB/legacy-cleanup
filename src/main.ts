@@ -1,16 +1,24 @@
+import * as github from '@actions/github';
 import * as core from '@actions/core'
-import {wait} from './wait'
+import Octokit from '@octokit/rest';
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    core.info('Log info');
+    const repoToken = core.getInput('repo-token');
+    const octokit : Octokit.Octokit = new github.GitHub(repoToken) as any;
+    const context = github.context;
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    const res = await octokit.repos.getContents({
+      ...context.repo,
+      path: 'package.json'
+    });
 
-    core.setOutput('time', new Date().toTimeString())
+    if(!Array.isArray(res.data)){
+      const content = res.data.content;
+      core.info(content || '');
+    }
+
   } catch (error) {
     core.setFailed(error.message)
   }
