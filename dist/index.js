@@ -2025,10 +2025,10 @@ function run() {
                 const content = res.data.content;
                 if (content) {
                     const file = Buffer.from(content, 'base64').toString();
-                    const json = JSON.parse(file);
-                    core.info(json);
+                    core.info(file);
                 }
             }
+            core.setFailed('just retry');
         }
         catch (error) {
             core.setFailed(error.message);
